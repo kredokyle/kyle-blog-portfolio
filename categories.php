@@ -6,28 +6,9 @@ if (!$_SESSION['account_id']) {
 }
 
 include "functions/connection.php";
+include "functions/categories.php";
 
-function getCategories(){
-   $sql = "SELECT * FROM categories";
-   $conn = connection();
-   if($result = $conn->query($sql)){
-      return $result;
-   }else{
-      die("Error retrieving categories: " . $conn->error);
-   }
-}
-
-function createCategory($category){
-   $sql = "INSERT INTO categories (category_name) VALUES ('$category')";
-   $conn = connection();
-   if($conn->query($sql)){
-      header("refresh: 0");
-   }else{
-      die("Error adding new category: " . $conn->error);
-   }
-}
-
-if(isset($_POST['btnAddCategory'])){
+if (isset($_POST['btnAddCategory'])) {
    $category = $_POST['category'];
 
    createCategory($category);
@@ -46,7 +27,7 @@ if(isset($_POST['btnAddCategory'])){
 </head>
 
 <body>
-   <?php include "admin_menu.php" ?>
+   <?php include "adminMenu.php" ?>
    <header class="jumbotron jumbotron-fluid bg-pink">
       <h2 class="display-4 text-white ml-4"><i class="far fa-folder-open pr-3"></i>Categories</h2>
    </header>
@@ -82,11 +63,21 @@ if(isset($_POST['btnAddCategory'])){
                   <tbody>
                      <?php
                      $result = getCategories();
-                     while($row = $result->fetch_assoc()){
+                     if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
                      ?>
+                           <tr>
+                              <td><?= $row['id'] ?></td>
+                              <td><?= $row['category_name'] ?></td>
+                           </tr>
+                        <?php
+                        }
+                     } else {
+                        ?>
                         <tr>
-                           <td><?= $row['id'] ?></td>
-                           <td><?= $row['category_name'] ?></td>
+                           <td colspan="2" class="text-center">
+                              <p class="lead font-italic font-weight-bold mb-0">No category found.</p>
+                           </td>
                         </tr>
                      <?php
                      }

@@ -4,6 +4,33 @@ if (!$_SESSION['account_id']) {
    header("location: logout.php");
    exit;
 }
+
+include "functions/connection.php";
+include "functions/categories.php";
+
+function createPost($title, $datePosted, $categoryID, $message)
+{
+   $conn = connection();
+   $title = $conn->real_escape_string($title);
+   $message = $conn->real_escape_string($message);
+   $accountID = $_SESSION['account_id'];
+
+   $sql = "INSERT INTO posts (post_title, post_message, date_posted, account_id, category_id) VALUES ('$title', '$message', '$datePosted', $accountID, $categoryID)";
+
+   if ($conn->query($sql)) {
+      header("location: posts.php");
+   } else {
+      die("Error posting: " . $conn->error);
+   }
+}
+
+if (isset($_POST['btnPost'])) {
+   $title = $_POST['title'];
+   $datePosted = $_POST['datePosted'];
+   $categoryID = $_POST['category'];
+   $message = $_POST['message'];
+   createPost($title, $datePosted, $categoryID, $message);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,30 +56,49 @@ if (!$_SESSION['account_id']) {
    <header class="jumbotron jumbotron-fluid bg-blue">
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
-   <main class="container">
-      <div class="card">
-         <div class="card-header">
+   <main class="container col-10 mt-5">
+      <a href="posts.php" class="btn btn-outline-secondary btn-sm mb-3"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
+      <div class="card border-0">
+         <div class="card-header border-0 bg-lpink">
             <h3>New Post</h3>
          </div>
          <div class="card-body">
-            <div class="form-group row align-items-center my-4">
-               <label for="title" class="h5 text-center col-sm-2">Title</label>
-               <input type="text" name="title" class="form-control form-control-lg col-sm-9" required autofocus>
-            </div>
-            <div class="input-group mb-2">
-               <div class="input-group-prepend">
-                  <div class="input-group-text bg-lblue"><i class="fas fa-calendar-day"></i></div>
+            <form action="" method="POST">
+               <div class="row align-items-center my-2 px-3">
+                  <label for="title" class="h5 text-center col-sm-2">Title</label>
+                  <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" required autofocus>
                </div>
-               <input type="date" name="date" class="form-control" required>
-            </div>
-            <div class="input-group mb-2">
-               <div class="input-group-prepend">
-                  <div class="input-group-text bg-lblue"><i class="fas fa-map-pin"></i></div>
+               <div class="row px-0">
+                  <div class="input-group mb-2 col">
+                     <div class="input-group-prepend">
+                        <div class="input-group-text bg-lpink"><i class="fas fa-calendar-day"></i></div>
+                     </div>
+                     <input type="date" name="datePosted" class="form-control" required>
+                  </div>
+                  <div class="input-group mb-2 col">
+                     <div class="input-group-prepend">
+                        <div class="input-group-text bg-lpink"><i class="fas fa-sitemap"></i></div>
+                     </div>
+                     <select name="category" class="form-control" required>
+                        <option value="">Select category</option>
+                        <?php
+                        $result = getCategories();
+                        if ($result->num_rows > 0) {
+                           while ($row = $result->fetch_assoc()) {
+                              echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                           }
+                        } else {
+                           echo "<option disabled>No category found.</option>";
+                        }
+                        ?>
+                     </select>
+                  </div>
+
                </div>
-               <select name="category" class="form-control" required>
-                  <option value="">Select category</option>
-               </select>
-            </div>
+               <textarea name="message" cols="30" rows="10" class="form-control" style="border-radius: 5px;"></textarea>
+
+               <button type="submit" name="btnPost" class="btn btn-pink px-6 mt-5 d-block mx-auto">Post</button>
+            </form>
          </div>
       </div>
    </main>

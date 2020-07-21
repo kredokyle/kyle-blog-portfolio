@@ -19,7 +19,7 @@ if (!$_SESSION['account_id']) {
 </head>
 
 <body>
-   <?php include "admin_menu.php" ?>
+   <?php include "adminMenu.php" ?>
 
    <header>
       <div class="jumbotron jumbotron-fluid bg-blue m-0">
@@ -45,8 +45,13 @@ if (!$_SESSION['account_id']) {
       <div class="container mt-5">
          <div class="row">
             <div class="col-lg-8 mb-5">
-               <h3 class="text-muted">All Posts</h3>
-               <hr>
+               <div class="container">
+                  <div class="row border-bottom mb-3 p-2">
+                     <h3 class="d-inline text-muted">All Posts</h3>
+                  </div>
+               </div>
+               <!-- <h3 class="text-muted">All Posts</h3>
+               <hr> -->
                <table class="table table-striped table-hover">
                   <thead class="thead-dark">
                      <tr>

@@ -61,7 +61,7 @@ if (isset($_POST['btnAddUser'])) {
 </head>
 
 <body>
-   <?php include "admin_menu.php" ?>
+   <?php include "adminMenu.php" ?>
    <header class="jumbotron jumbotron-fluid bg-yellow">
       <h2 class="display-4 text-white ml-4"><i class="fas fa-users pr-3"></i>Users</h2>
    </header>

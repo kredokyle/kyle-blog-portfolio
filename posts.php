@@ -7,7 +7,8 @@ if (!$_SESSION['account_id']) {
 
 include "functions/connection.php";
 
-function getPosts(){
+function getPosts()
+{
    $id = $_SESSION['account_id'];
    $sql = "SELECT posts.id AS id, posts.post_title AS post_title, categories.category_name AS category, posts.date_posted AS date_posted
          FROM posts
@@ -15,10 +16,10 @@ function getPosts(){
          ON posts.category_id = categories.id
          WHERE posts.account_id = $id";
    $conn = connection();
-   
-   if($result = $conn->query($sql)){
+
+   if ($result = $conn->query($sql)) {
       return $result;
-   }else{
+   } else {
       die("Error retrieving posts: " . $conn->error);
    }
 }
@@ -39,48 +40,48 @@ function getPosts(){
 <body>
    <?php
    if ($_SESSION['role'] == "A") {
-      include "admin_menu.php";
+      include "adminMenu.php";
    } else {
-      include "user_menu.php";
+      include "userMenu.php";
    }
    ?>
    <header class="jumbotron jumbotron-fluid bg-blue">
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
    <main class="container mt-5">
-      <h3 class="float-left text-muted">My Posts</h3>
-      <a href="addPost.php" class="btn btn-outline-blue btn-sm float-right"><i class="fas fa-plus mr-2"></i>New Post</a>
-      <br>
-      <hr>
+      <div class="container">
+         <div class="row border-bottom mb-3 p-2 justify-content-between">
+            <h3 class="d-inline text-muted">My Posts</h3>
+            <a href="addPost.php" class="btn btn-outline-blue"><i class="fas fa-plus mr-2"></i>New Post</a>
+         </div>
+      </div>
       <table class="table table-hover">
          <thead class="thead-dark">
             <tr>
-               <th>#</th>
                <th>Title</th>
-               <th>Category</th>
                <th>Date Posted</th>
+               <th>Category</th>
                <th></th>
             </tr>
          </thead>
          <tbody>
             <?php
             $result = getPosts();
-            if($result->num_rows > 0){
-               while($row = $result->fetch_assoc()){
-                  ?>
-               <tr>
-                  <td><?= $row['id'] ?></td>
-                  <td><?= $row['post_title'] ?></td>
-                  <td><?= $row['category'] ?></td>
-                  <td><?= $row['date_posted'] ?></td>
-                  <td>
-                     <a href="postDetails.php?id=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>Details</a>
-                  </td>
-               </tr>
+            if ($result->num_rows > 0) {
+               while ($row = $result->fetch_assoc()) {
+            ?>
+                  <tr>
+                     <td><?= $row['post_title'] ?></td>
+                     <td><?= $row['date_posted'] ?></td>
+                     <td><?= $row['category'] ?></td>
+                     <td>
+                        <a href="postDetails.php?id=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>Details</a>
+                     </td>
+                  </tr>
                <?php
                }
             } else {
-            ?>
+               ?>
                <tr>
                   <td colspan="5" class="text-center">
                      <p class="lead font-italic font-weight-bold mb-0">No post found.</p>
