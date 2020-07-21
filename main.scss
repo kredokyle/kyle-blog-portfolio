@@ -1,13 +1,21 @@
 $theme-colors: (
   "blue": #5da2d5,
-  "lblue": #90ccf4,
+  "lblue": #c3e1f5,
   "pink": #f78888,
-  "lpink": #fabfbf,
+  "lpink": #eebebe,
   "yellow": #f3d250,
-  "lyellow": #f1df97,
+  "lyellow": #eee2b0,
   "light": #ececec
 );
 
+.input-group-text .fas {
+  font-size: 20px;
+  width: 30px;
+}
+
+.input-group-text {
+  min-width: 56px;
+}
 
 $btn-border-radius: 8rem;
 $btn-border-radius-sm: 8rem;
@@ -20,6 +28,8 @@ $btn-padding-x-lg: 1.2rem;
 $btn-font-weight: 700;
 
 $input-border-radius: 8rem;
+$input-border-radius-sm: 8rem;
+$input-border-radius-lg: 8rem;
 
 
 @import "node_modules/bootstrap/scss/functions";

@@ -1,28 +1,11 @@
 <?php
 $error = "";
-function register($fname, $lname, $address, $contact, $username, $passw)
-{
-   include "functions/connection.php";
-   $passw = password_hash($passw, PASSWORD_DEFAULT);
-   $sql = "INSERT INTO accounts (username, `password`) VALUES ('$username', '$passw')";
-   $conn = connection();
-   if ($conn->query($sql)) {
-      $last_id = $conn->insert_id;
-      $sql = "INSERT INTO users (first_name, last_name, contact_number, `address`, account_id) VALUES ('$fname', '$lname', '$contact', '$address', $last_id)";
-      if ($conn->query($sql)) {
-         header("location: login.php");
-         exit;
-      } else {
-         die("Error adding new user: " . $conn->error);
-      }
-   } else {
-      die("Error adding new account: " . $conn->error);
-   }
-}
+
+include "functions/register.php";
 
 if (isset($_POST['btnRegister'])) {
-   $fname = $_POST['firstName'];
-   $lname = $_POST['lastName'];
+   $firstName = $_POST['firstName'];
+   $lastName = $_POST['lastName'];
    $address = $_POST['address'];
    $contact = $_POST['contact'];
    $username = $_POST['username'];
@@ -30,7 +13,7 @@ if (isset($_POST['btnRegister'])) {
    $confirmPassw = $_POST['confirmPassw'];
 
    if ($passw == $confirmPassw) {
-      register($fname, $lname, $address, $contact, $username, $passw);
+      registerUser($firstName, $lastName, $address, $contact, $username, $passw);
    } else {
       $error = "
          <div class='mt-3 mx-auto alert alert-danger' role='alert'>
@@ -47,19 +30,12 @@ if (isset($_POST['btnRegister'])) {
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-   <meta name="Description" content="Enter your description here" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
    <link rel="stylesheet" href="main.css">
+   <script src="js/bootstrap.min.js"></script>
    <title>Blogen | Register</title>
    <style>
-      .fas {
-         font-size: 20px;
-         width: 30px;
-      }
-
-      .input-group-text {
-         min-width: 56px;
-      }
+      
    </style>
 </head>
 
@@ -68,10 +44,10 @@ if (isset($_POST['btnRegister'])) {
    <body class="bg-light">
       <main>
          <form action="" method="post">
-            <div class="col-md-6 mx-auto my-5">
+            <div class="col-lg-6 col-md-9 mx-auto my-5">
                <div class="card">
                   <div class="card-header bg-yellow row align-items-center m-0 border-bottom-0" style="height: 15rem">
-                     <h6 class="display-4 text-dark">Create Account</h6>
+                     <h1 class="display-4 text-dark">Create Account</h1>
                   </div>
                   <div class="card-body">
                      <div class="input-group mb-2">
@@ -128,7 +104,5 @@ if (isset($_POST['btnRegister'])) {
       <!-- <footer class="bg-blue text-white text-center w-100" style="height: 100px; margin-top: 150px;">
          <small style="line-height: 100px;">Kyle Nurville &copy; 2020</small>
       </footer> -->
-      <script src="js/bootstrap.min.js"></script>
    </body>
-
 </html>
