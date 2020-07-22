@@ -32,7 +32,7 @@ if (isset($_POST['btnAddCategory'])) {
       <h2 class="display-4 text-white ml-4"><i class="far fa-folder-open pr-3"></i>Categories</h2>
    </header>
    <main role="main">
-      <div class="container mt-5">
+      <div class="container mt-6">
          <div class="row">
             <div class="col-lg-5 col-md-6 mx-auto">
                <form action="" method="post">

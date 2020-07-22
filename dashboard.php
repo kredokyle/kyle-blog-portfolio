@@ -5,6 +5,28 @@ if (!$_SESSION['account_id']) {
    exit;
 }
 
+include "functions/connection.php";
+
+function getAllPosts()
+{
+   // title
+   // author - username
+   // date_posted
+   // category
+   // Details
+   $sql = "SELECT posts.id AS id, posts.post_title AS title, accounts.username AS author, posts.date_posted AS date_posted, categories.category_name AS category
+         FROM accounts
+         INNER JOIN posts
+         ON accounts.id = posts.account_id
+         INNER JOIN categories
+         ON categories.id = posts.category_id";
+   $conn = connection();
+   if ($result = $conn->query($sql)) {
+      return $result;
+   } else {
+      die("Error retrieving posts: " . $conn->error);
+   }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,20 +51,20 @@ if (!$_SESSION['account_id']) {
          <div class="container">
             <div class="row">
                <div class="col-md my-1">
-                  <a class="btn btn-yellow btn-lg col text-truncate" href="addPost.php" title="Add New Post"><i class="fas fa-plus mr-2"></i>Add New Post</a>
+                  <a class="btn btn-yellow col text-truncate" href="addPost.php" title="Add New Post"><i class="fas fa-plus mr-2"></i>Add New Post</a>
                </div>
                <div class="col-md my-1">
-                  <a class="btn btn-yellow btn-lg col text-truncate" href="categories.php" title="Add New Category"><i class="fas fa-plus mr-2"></i>Add New Category</a>
+                  <a class="btn btn-yellow col text-truncate" href="categories.php" title="Add New Category"><i class="fas fa-plus mr-2"></i>Add New Category</a>
                </div>
                <div class="col-md my-1">
-                  <a class="btn btn-yellow btn-lg col text-truncate" href="users.php" title="Add New User"><i class="fas fa-plus mr-2"></i>Add New User</a>
+                  <a class="btn btn-yellow col text-truncate" href="users.php" title="Add New User"><i class="fas fa-plus mr-2"></i>Add New User</a>
                </div>
             </div>
          </div>
       </div>
    </header>
    <main>
-      <div class="container mt-5">
+      <div class="container mt-6">
          <div class="row">
             <div class="col-lg-8 mb-5">
                <div class="container">
@@ -50,56 +72,37 @@ if (!$_SESSION['account_id']) {
                      <h3 class="d-inline text-muted">All Posts</h3>
                   </div>
                </div>
-               <!-- <h3 class="text-muted">All Posts</h3>
-               <hr> -->
                <table class="table table-striped table-hover">
                   <thead class="thead-dark">
                      <tr>
-                        <th>#</th>
-                        <th>Author</th>
                         <th>Title</th>
-                        <th>Category</th>
+                        <th>Author</th>
                         <th>Date Posted</th>
+                        <th>Category</th>
+                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
-                     <tr>
-                        <td>1</td>
-                        <td>Ann Jones</td>
-                        <td>Post one</td>
-                        <td>Web Development</td>
-                        <td>July 22, 2017</td>
-                     </tr>
-                     <tr>
-                        <td>2</td>
-                        <td>Ann Jones</td>
-                        <td>Post two</td>
-                        <td>Web Development</td>
-                        <td>July 22, 2017</td>
-                     </tr>
-                     <tr>
-                        <td>3</td>
-                        <td>David Dave</td>
-                        <td>Post three</td>
-                        <td>Web Development</td>
-                        <td>July 22, 2017</td>
-                     </tr>
-                     <tr>
-                        <td>4</td>
-                        <td>Mike Anders</td>
-                        <td>Post four</td>
-                        <td>Web Development</td>
-                        <td>July 22, 2017</td>
-                     </tr>
-                     <tr>
-                        <td>5</td>
-                        <td>David Dave</td>
-                        <td>Post five</td>
-                        <td>Web Development</td>
-                        <td>July 22, 2017</td>
-
-                     </tr>
-
+                     <?php
+                     $result = getAllPosts();
+                     if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                     ?>
+                           <tr>
+                              <td><?= $row['title'] ?></td>
+                              <td><?= $row['author'] ?></td>
+                              <td><?= date_format(date_create($row['date_posted']), "F j, Y") ?></td>
+                              <td><?= $row['category'] ?></td>
+                              <td>
+                                 <a href="viewPost.php?postID=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>View</a>
+                              </td>
+                           </tr>
+                     <?php
+                        }
+                     } else {
+                        //no post 
+                     }
+                     ?>
                   </tbody>
                </table>
             </div>

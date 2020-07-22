@@ -10,7 +10,7 @@ include "functions/connection.php";
 function getPosts()
 {
    $id = $_SESSION['account_id'];
-   $sql = "SELECT posts.id AS id, posts.post_title AS post_title, categories.category_name AS category, posts.date_posted AS date_posted
+   $sql = "SELECT posts.id AS id, posts.post_title AS post_title, categories.category_name AS category, DATE_FORMAT(posts.date_posted, '%b %e, %Y') AS date_posted
          FROM posts
          INNER JOIN categories
          ON posts.category_id = categories.id
@@ -48,7 +48,7 @@ function getPosts()
    <header class="jumbotron jumbotron-fluid bg-blue">
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
-   <main class="container mt-5">
+   <main class="container mt-6">
       <div class="container">
          <div class="row border-bottom mb-3 p-2 justify-content-between">
             <h3 class="d-inline text-muted">My Posts</h3>
@@ -75,7 +75,7 @@ function getPosts()
                      <td><?= $row['date_posted'] ?></td>
                      <td><?= $row['category'] ?></td>
                      <td>
-                        <a href="postDetails.php?id=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>Details</a>
+                        <a href="viewPost.php?postID=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>View</a>
                      </td>
                   </tr>
                <?php

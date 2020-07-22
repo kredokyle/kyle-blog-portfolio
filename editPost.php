@@ -6,16 +6,19 @@ if (!$_SESSION['account_id']) {
 }
 
 include "functions/connection.php";
+include "functions/posts.php";
 include "functions/categories.php";
 
-function createPost($title, $datePosted, $categoryID, $message)
+$postID = $_GET['postID'];
+$rowPost = getPost($postID);
+
+function updatePost($postID, $title, $datePosted, $categoryID, $message)
 {
    $conn = connection();
    $title = $conn->real_escape_string($title);
    $message = $conn->real_escape_string($message);
-   $accountID = $_SESSION['account_id'];
 
-   $sql = "INSERT INTO posts (post_title, post_message, date_posted, account_id, category_id) VALUES ('$title', '$message', '$datePosted', $accountID, $categoryID)";
+   $sql = "UPDATE posts SET post_title = '$title', post_message = '$message', date_posted = '$datePosted', category_id = $categoryID WHERE id = $postID";
 
    if ($conn->query($sql)) {
       header("location: posts.php");
@@ -24,12 +27,12 @@ function createPost($title, $datePosted, $categoryID, $message)
    }
 }
 
-if (isset($_POST['btnPost'])) {
+if(isset($_POST['btnSave'])){
    $title = $_POST['title'];
    $datePosted = $_POST['datePosted'];
    $categoryID = $_POST['category'];
    $message = $_POST['message'];
-   createPost($title, $datePosted, $categoryID, $message);
+   updatePost($postID, $title, $datePosted, $categoryID, $message);
 }
 ?>
 <!DOCTYPE html>
@@ -42,7 +45,7 @@ if (isset($_POST['btnPost'])) {
    <meta name="Description" content="Enter your description here" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
    <link rel="stylesheet" href="main.css">
-   <title>Blogen | New Post</title>
+   <title>Blogen | Edit Post</title>
 </head>
 
 <body>
@@ -57,35 +60,40 @@ if (isset($_POST['btnPost'])) {
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
    <main class="container mt-6">
-      <a href="posts.php" class="btn btn-outline-secondary btn-sm mb-3"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
+      <a href="viewPost.php?postID=<?= $postID ?>" class="btn btn-outline-secondary btn-sm mb-3"><i class="fas fa-chevron-left mr-2"></i>Back</a>
       <div class="card border-0">
-         <div class="card-header border-0 bg-lpink">
-            <h3>New Post</h3>
+         <div class="card-header border-0 bg-yellow">
+            <h3>Edit Post</h3>
          </div>
          <div class="card-body">
             <form action="" method="POST">
                <div class="row align-items-center my-2 px-3">
                   <label for="title" class="h5 text-center col-sm-2">Title</label>
-                  <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" required autofocus>
+                  <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" value="<?= htmlspecialchars($rowPost['post_title']) ?>" required autofocus>
                </div>
                <div class="row px-0">
                   <div class="input-group mb-2 col">
                      <div class="input-group-prepend">
-                        <div class="input-group-text bg-lpink"><i class="fas fa-calendar-day"></i></div>
+                        <div class="input-group-text bg-lyellow"><i class="fas fa-calendar-day"></i></div>
                      </div>
-                     <input type="date" name="datePosted" class="form-control" required>
+                     <input type="date" name="datePosted" class="form-control" value="<?= $rowPost['date_posted'] ?>" required>
                   </div>
                   <div class="input-group mb-2 col">
                      <div class="input-group-prepend">
-                        <div class="input-group-text bg-lpink"><i class="fas fa-sitemap"></i></div>
+                        <div class="input-group-text bg-lyellow"><i class="fas fa-sitemap"></i></div>
                      </div>
                      <select name="category" class="form-control" required>
                         <option value="">Select category</option>
                         <?php
                         $result = getCategories();
                         if ($result->num_rows > 0) {
-                           while ($row = $result->fetch_assoc()) {
-                              echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                           while ($rowCat = $result->fetch_assoc()) {
+                              if($rowCat['category_name']==$rowPost['category']){
+                                 echo "<option selected value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
+                              }else{
+                                 echo "<option value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
+                              }
+
                            }
                         } else {
                            echo "<option disabled>No category found.</option>";
@@ -95,9 +103,9 @@ if (isset($_POST['btnPost'])) {
                   </div>
 
                </div>
-               <textarea name="message" cols="30" rows="10" class="form-control" style="border-radius: 5px;"></textarea>
+               <textarea name="message" cols="30" rows="10" class="form-control" style="border-radius: 5px;"><?= $rowPost['post_message'] ?></textarea>
 
-               <button type="submit" name="btnPost" class="btn btn-pink px-6 mt-5 d-block mx-auto">Post</button>
+               <button type="submit" name="btnSave" class="btn btn-yellow px-6 mt-5 d-block mx-auto">Save</button>
             </form>
          </div>
       </div>

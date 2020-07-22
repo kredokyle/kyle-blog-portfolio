@@ -1,6 +1,6 @@
 <?php
 $error = "";
-
+include "functions/connection.php";
 include "functions/register.php";
 
 if (isset($_POST['btnRegister'])) {
@@ -13,7 +13,7 @@ if (isset($_POST['btnRegister'])) {
    $confirmPassw = $_POST['confirmPassw'];
 
    if ($passw == $confirmPassw) {
-      registerUser($firstName, $lastName, $address, $contact, $username, $passw);
+      $error = registerUser($firstName, $lastName, $address, $contact, $username, $passw);
    } else {
       $error = "
          <div class='mt-3 mx-auto alert alert-danger' role='alert'>
@@ -32,10 +32,9 @@ if (isset($_POST['btnRegister'])) {
    <meta http-equiv="X-UA-Compatible" content="ie=edge">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
    <link rel="stylesheet" href="main.css">
-   <script src="js/bootstrap.min.js"></script>
    <title>Blogen | Register</title>
    <style>
-      
+
    </style>
 </head>
 
@@ -104,5 +103,8 @@ if (isset($_POST['btnRegister'])) {
       <!-- <footer class="bg-blue text-white text-center w-100" style="height: 100px; margin-top: 150px;">
          <small style="line-height: 100px;">Kyle Nurville &copy; 2020</small>
       </footer> -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
    </body>
+
 </html>

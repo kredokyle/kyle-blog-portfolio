@@ -38,7 +38,7 @@ if (isset($_POST['btnAddUser'])) {
    $confirmPassw = $_POST['confirmPassw'];
 
    if ($passw == $confirmPassw) {
-      registerAdmin($firstName, $lastName, $address, $contact, $role, $username, $passw);
+      $error = registerAdmin($firstName, $lastName, $address, $contact, $role, $username, $passw);
    } else {
       $error = "
          <div class='mt-3 mx-auto alert alert-danger' role='alert'>
@@ -66,7 +66,7 @@ if (isset($_POST['btnAddUser'])) {
       <h2 class="display-4 text-white ml-4"><i class="fas fa-users pr-3"></i>Users</h2>
    </header>
    <main>
-      <div class="container mt-5">
+      <div class="container mt-6">
          <div class="row">
             <div class="col-xl-5 col-lg-10 mx-auto">
                <form action="" method="post">
