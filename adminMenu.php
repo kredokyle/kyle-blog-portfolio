@@ -28,8 +28,7 @@
       <ul class="navbar-nav">
          <li class="nav-item mr-2">
             <a href="profile.php" class="nav-link">
-               <?= $_SESSION['username'] ?>
-               <small>(Admin)</small>
+               Admin <?= $_SESSION['username'] ?>
             </a>
          </li>
          <li class="nav-item">

@@ -6,9 +6,10 @@ if (!$_SESSION['account_id']) {
 }
 
 include "functions/connection.php";
+include "functions/userExists.php";
+$error = "";
 $id = $_SESSION['account_id'];
 $row = getUser($id);
-print_r($row);
 
 function getUser($id)
 {
@@ -27,7 +28,6 @@ function uploadPhoto($imageName, $id)
 
    $conn = connection();
 
-   // Destination - where to store the image / directory
    $destination = "img/" . basename($imageName);
 
    if ($conn->query($sql)) {
@@ -41,10 +41,56 @@ function uploadPhoto($imageName, $id)
    }
 }
 
+function updateUser($id, $firstName, $lastName, $address, $contact, $bio){
+   $sql = "UPDATE users SET first_name = '$firstName', last_name = '$lastName', `address` = '$address', contact_number = '$contact', bio = '$bio' WHERE account_id = $id";
+   $conn = connection();
+   if($conn->query($sql)){
+      header("refresh: 0");
+   } else {
+      die("Error updating your information: " . $conn->error);
+   }
+}
+
+function updateUsername($id, $username){
+   if(!userExists($username)){
+      $sql = "UPDATE accounts SET username = '$username' WHERE id = $id";
+      $conn = connection();
+      if($conn->query($sql)){
+         $_SESSION['username'] = $username;
+         header("refresh: 0");
+      } else {
+         die("Error updating username: " . $conn->error);
+      }
+   } else {
+      // return "<div class='mt-3 mx-auto alert alert-danger' role='alert'> Username already exists. </div>";
+   }
+}
+
 if (isset($_POST['btnUpdatePhoto'])) {
    $imageName = $_FILES['image']['name'];
 
    uploadPhoto($imageName, $id);
+}
+
+if(isset($_POST['btnUpdateInfo'])){
+   $firstName = $_POST['firstName'];
+   $lastName = $_POST['lastName'];
+   $address = $_POST['address'];
+   $contact = $_POST['contact'];
+   $bio = $_POST['bio'];
+   $username = $_POST['username'];
+   $passw = $_POST['passw'];
+
+   if(password_verify($passw, $row['password'])){
+      if($username != $row['username']){
+         updateUsername($id, $username);
+      }
+      $error = updateUser($id, $firstName, $lastName, $address, $contact, $bio);
+   } else {
+      $error = "<div class='mt-3 mx-auto alert alert-danger' role='alert'>
+      Incorrect password.
+      </div>";
+   }
 }
 ?>
 <!DOCTYPE html>
@@ -75,11 +121,11 @@ if (isset($_POST['btnUpdatePhoto'])) {
       <div class="jumbotron jumbotron-fluid bg-light">
          <div class="container text-container">
             <div class="row">
-               <div class="col-sm">
-                  <a class="btn btn-yellow col text-truncate" href="#"><i class="fas fa-lock mr-2"></i>Change
+               <div class="col-sm my-1">
+                  <a class="btn btn-yellow col text-truncate" href="changePassword.php"><i class="fas fa-lock mr-2"></i>Change
                      Password</a>
                </div>
-               <div class="col-sm">
+               <div class="col-sm my-1">
                   <a class="btn btn-outline-danger col text-truncate" href="#"><i class="fas fa-trash-alt mr-3"></i>Delete Account</a>
                </div>
             </div>
@@ -88,8 +134,8 @@ if (isset($_POST['btnUpdatePhoto'])) {
    </header>
    <main class="container mt-6">
       <div class="row">
-         <div class="col-lg-4 col-md-6 mx-auto">
-            <div class="card border-0">
+         <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+            <div class="card mb-5 border-0">
                <!-- IMAGE -->
                <?php
                if ($row['avatar'] == NULL) {
@@ -105,17 +151,17 @@ if (isset($_POST['btnUpdatePhoto'])) {
                <div class="card-body">
                   <form action="" method="post" enctype="multipart/form-data">
                      <div class="row">
-                        <div class="custom-file col-lg-8 mb-1 mr-1">
+                        <div class="custom-file col-md-8 mb-1 mr-1">
                            <label for="choosePhoto" class="custom-file-label">Choose Photo</label>
                            <input type="file" name="image" id="choosePhoto" class="custom-file-input" required>
                         </div>
-                        <button type="submit" class="btn btn-blue btn-sm col-lg mb-1" name="btnUpdatePhoto">Update</button>
+                        <button type="submit" class="btn btn-dark btn-sm text-truncate col mb-1" name="btnUpdatePhoto" title="Update Photo">Update Photo</button>
                      </div>
                   </form>
                </div>
             </div>
          </div>
-         <div class="col-lg-8">
+         <div class="col-lg-7">
             <div class="container">
                <div class="row border-bottom mb-3 p-2">
                   <h3 class="d-inline text-muted">Update Details</h3>
@@ -126,35 +172,38 @@ if (isset($_POST['btnUpdatePhoto'])) {
                   <div class="input-group-prepend">
                      <div class="input-group-text bg-lyellow"><i class="fas fa-user"></i></div>
                   </div>
-                  <input type="text" name="firstName" class="form-control" placeholder="First Name" required autofocus>
-                  <input type="text" name="lastName" class="form-control" placeholder="Last Name" required>
+                  <input type="text" name="firstName" class="form-control" placeholder="First Name" value="<?= $row['first_name'] ?>" required autofocus>
+                  <input type="text" name="lastName" class="form-control" placeholder="Last Name" value="<?= $row['last_name'] ?>" required>
                </div>
                <div class="input-group mb-2">
                   <div class="input-group-prepend">
                      <div class="input-group-text bg-lyellow"><i class="fas fa-map-pin"></i></div>
                   </div>
-                  <input type="text" name="address" class="form-control" placeholder="Address" required>
+                  <input type="text" name="address" class="form-control" placeholder="Address" value="<?= $row['address'] ?>" required>
                </div>
-               <div class="input-group mb-5">
+               <div class="input-group mb-2">
                   <div class="input-group-prepend">
                      <div class="input-group-text bg-lyellow"><i class="fas fa-phone-alt"></i></div>
                   </div>
-                  <input type="text" name="contact" class="form-control" placeholder="Contact Number" required>
+                  <input type="text" name="contact" class="form-control" placeholder="Contact Number" value="<?= $row['contact_number'] ?>" required>
                </div>
+               <textarea name="bio" class="form-control mb-5" style="border-radius: 5px;" cols="30" rows="10" placeholder="Write your bio here"><?= $row['bio'] ?></textarea>
 
                <div class="input-group mb-2">
                   <div class="input-group-prepend">
-                     <div class="input-group-text bg-lyellow"><i class="fas fa-id-card"></i></div>
+                     <div class="input-group-text bg-yellow"><i class="fas fa-id-card"></i></div>
                   </div>
-                  <input type="text" name="username" class="form-control" placeholder="Username" required>
+                  <input type="text" name="username" class="form-control font-weight-bold" placeholder="Username" value="<?= $row['username'] ?>" required>
                </div>
-               <div class="input-group mb-2">
+               <div class="input-group mb-4">
                   <div class="input-group-prepend">
-                     <div class="input-group-text bg-lyellow"><i class="fas fa-lock"></i></div>
+                     <div class="input-group-text bg-yellow"><i class="fas fa-lock"></i></div>
                   </div>
-                  <input type="password" name="passw" class="form-control" placeholder="Password" minlength="8" required>
+                  <input type="password" name="passw" class="form-control" placeholder="Enter password to confirm" minlength="8" required>
                </div>
                <?= $error ?>
+
+               <button type="submit" name="btnUpdateInfo" class="btn btn-dark float-right">Save Changes</button>
             </form>
          </div>
       </div>
