@@ -52,7 +52,7 @@ function getPosts()
       <div class="container">
          <div class="row border-bottom mb-3 p-2 justify-content-between">
             <h3 class="d-inline text-muted">My Posts</h3>
-            <a href="addPost.php" class="btn btn-outline-blue"><i class="fas fa-plus mr-2"></i>New Post</a>
+            <a href="addPost.php" class="btn btn-outline-blue border-0"><i class="fas fa-plus mr-2"></i>New Post</a>
          </div>
       </div>
       <table class="table table-hover">

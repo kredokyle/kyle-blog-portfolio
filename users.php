@@ -125,7 +125,7 @@ if (isset($_POST['btnAddUser'])) {
                         <p class="text-muted text-right"><small>Password must be 8 or more characters long.</small></p>
                         <?= $error ?>
                         <div class="mt-5">
-                           <button name="btnAddUser" class="btn btn-dark btn-block">Register</button>
+                           <button name="btnAddUser" class="btn btn-primary btn-sm float-right">Register</button>
                         </div>
                      </div> <!-- card body -->
                   </div> <!-- card -->

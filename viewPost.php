@@ -5,6 +5,11 @@ if (!$_SESSION['account_id']) {
    exit;
 }
 
+if(!$_GET['postID']){
+   header("location: posts.php");
+   exit;
+}
+
 include "functions/connection.php";
 include "functions/posts.php";
 $postID = $_GET['postID'];
@@ -41,13 +46,13 @@ $row = getPost($postID);
    </header>
    <main class="container mt-6">
       <div class="row mb-3 p-2 justify-content-between">
-         <a href="posts.php" class="btn btn-outline-secondary btn-sm"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
+         <a href="posts.php" class="btn btn-outline-secondary btn-sm border-0"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
          <?php
-            if($row['account_id'] == $_SESSION['account_id']){
+         if ($row['account_id'] == $_SESSION['account_id']) {
          ?>
-         <a href="editPost.php?postID=<?= $postID ?>" class="btn btn-outline-yellow btn-sm px-5">Edit Post</a>
+            <a href="editPost.php?postID=<?= $postID ?>" class="btn btn-outline-yellow btn-sm px-5 border-0 text-secondary"><i class="fas fa-edit mr-2"></i>Edit Post</a>
          <?php
-            }
+         }
          ?>
       </div>
       <h3 class="display-3"><?= $row['post_title'] ?></h3>
@@ -58,7 +63,7 @@ $row = getPost($postID);
          <?= $row['post_message'] ?>
       </p>
    </main>
-   <footer class="bg-lblue text-center w-100" style="margin-top: 200px;">
+   <footer class="bg-lblue text-center w-100" style="margin-top: 400px;">
       <small style="line-height:100px;">Kyle Nurville &copy; 2020</small>
    </footer>
    <script src="js/jquery.min.js"></script>

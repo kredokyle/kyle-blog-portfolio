@@ -57,7 +57,7 @@ if (isset($_POST['btnPost'])) {
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
    <main class="container mt-6">
-      <a href="posts.php" class="btn btn-outline-secondary btn-sm mb-3"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
+      <a href="posts.php" class="btn btn-outline-secondary btn-sm mb-3 border-0"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
       <div class="card border-0">
          <div class="card-header border-0 bg-lpink">
             <h3>New Post</h3>

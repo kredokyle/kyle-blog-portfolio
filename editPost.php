@@ -5,6 +5,11 @@ if (!$_SESSION['account_id']) {
    exit;
 }
 
+if(!$_GET['postID']){
+   header("location: posts.php");
+   exit;
+}
+
 include "functions/connection.php";
 include "functions/posts.php";
 include "functions/categories.php";
@@ -60,7 +65,7 @@ if(isset($_POST['btnSave'])){
       <h2 class="display-4 text-white ml-4"><i class="fas fa-pencil-alt pr-3"></i>Posts</h2>
    </header>
    <main class="container mt-6">
-      <a href="viewPost.php?postID=<?= $postID ?>" class="btn btn-outline-secondary btn-sm mb-3"><i class="fas fa-chevron-left mr-2"></i>Back</a>
+      <a href="viewPost.php?postID=<?= $postID ?>" class="btn btn-outline-secondary btn-sm mb-3 border-0"><i class="fas fa-chevron-left mr-2"></i>Back</a>
       <div class="card border-0">
          <div class="card-header border-0 bg-yellow">
             <h3>Edit Post</h3>

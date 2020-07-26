@@ -41,21 +41,24 @@ function uploadPhoto($imageName, $id)
    }
 }
 
-function updateUser($id, $firstName, $lastName, $address, $contact, $bio){
-   $sql = "UPDATE users SET first_name = '$firstName', last_name = '$lastName', `address` = '$address', contact_number = '$contact', bio = '$bio' WHERE account_id = $id";
+function updateUser($id, $firstName, $lastName, $address, $contact, $bio)
+{
    $conn = connection();
-   if($conn->query($sql)){
+   $bio = $conn->real_escape_string($bio);
+   $sql = "UPDATE users SET first_name = '$firstName', last_name = '$lastName', `address` = '$address', contact_number = '$contact', bio = '$bio' WHERE account_id = $id";
+   if ($conn->query($sql)) {
       header("refresh: 0");
    } else {
       die("Error updating your information: " . $conn->error);
    }
 }
 
-function updateUsername($id, $username){
-   if(!userExists($username)){
+function updateUsername($id, $username)
+{
+   if (!userExists($username)) {
       $sql = "UPDATE accounts SET username = '$username' WHERE id = $id";
       $conn = connection();
-      if($conn->query($sql)){
+      if ($conn->query($sql)) {
          $_SESSION['username'] = $username;
          header("refresh: 0");
       } else {
@@ -72,7 +75,7 @@ if (isset($_POST['btnUpdatePhoto'])) {
    uploadPhoto($imageName, $id);
 }
 
-if(isset($_POST['btnUpdateInfo'])){
+if (isset($_POST['btnUpdateInfo'])) {
    $firstName = $_POST['firstName'];
    $lastName = $_POST['lastName'];
    $address = $_POST['address'];
@@ -81,8 +84,8 @@ if(isset($_POST['btnUpdateInfo'])){
    $username = $_POST['username'];
    $passw = $_POST['passw'];
 
-   if(password_verify($passw, $row['password'])){
-      if($username != $row['username']){
+   if (password_verify($passw, $row['password'])) {
+      if ($username != $row['username']) {
          updateUsername($id, $username);
       }
       $error = updateUser($id, $firstName, $lastName, $address, $contact, $bio);
@@ -126,7 +129,7 @@ if(isset($_POST['btnUpdateInfo'])){
                      Password</a>
                </div>
                <div class="col-sm my-1">
-                  <a class="btn btn-outline-danger col text-truncate" href="#"><i class="fas fa-trash-alt mr-3"></i>Delete Account</a>
+                  <a class="btn btn-outline-danger col text-truncate" href="deleteAccount.php"><i class="fas fa-trash-alt mr-3"></i>Delete Account</a>
                </div>
             </div>
          </div>
@@ -136,26 +139,28 @@ if(isset($_POST['btnUpdateInfo'])){
       <div class="row">
          <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
             <div class="card mb-5 border-0">
-               <!-- IMAGE -->
-               <?php
-               if ($row['avatar'] == NULL) {
-               ?>
-                  <div style="background-image: url('img/user.png'); width: 100%; height: 300px; background-position: center; background-size: cover;"></div>
-               <?php
-               } else {
-               ?>
-                  <div style="background-image: url('img/<?= $row['avatar'] ?>'); width: 100%; height: 350px; background-position: center; background-size: cover;"></div>
-               <?php
-               }
-               ?>
+               <div class="card-header p-0">
+                  <!-- IMAGE -->
+                  <?php
+                  if ($row['avatar'] == NULL) {
+                  ?>
+                     <div style="background-image: url('img/user.png'); width: 100%; height: 300px; background-position: center; background-size: cover;"></div>
+                  <?php
+                  } else {
+                  ?>
+                     <div style="background-image: url('img/<?= $row['avatar'] ?>'); width: 100%; height: 350px; background-position: center; background-size: cover;"></div>
+                  <?php
+                  }
+                  ?>
+               </div>
                <div class="card-body">
                   <form action="" method="post" enctype="multipart/form-data">
                      <div class="row">
-                        <div class="custom-file col-md-8 mb-1 mr-1">
+                        <div class="custom-file col-md-7 mb-1 mr-1">
                            <label for="choosePhoto" class="custom-file-label">Choose Photo</label>
                            <input type="file" name="image" id="choosePhoto" class="custom-file-input" required>
                         </div>
-                        <button type="submit" class="btn btn-dark btn-sm text-truncate col mb-1" name="btnUpdatePhoto" title="Update Photo">Update Photo</button>
+                        <button type="submit" class="btn btn-outline-dark btn-sm text-truncate col mb-1" name="btnUpdatePhoto" title="Update Photo">Update Photo</button>
                      </div>
                   </form>
                </div>
@@ -203,7 +208,7 @@ if(isset($_POST['btnUpdateInfo'])){
                </div>
                <?= $error ?>
 
-               <button type="submit" name="btnUpdateInfo" class="btn btn-dark float-right">Save Changes</button>
+               <button type="submit" name="btnUpdateInfo" class="btn btn-outline-dark float-right">Save Changes</button>
             </form>
          </div>
       </div>

@@ -108,25 +108,25 @@ function getAllPosts()
             </div>
             <aside class="col-lg-4 mx-auto">
                <div class="row">
-                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-blue">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
                      <div class="card-body">
                         <h4>My Posts</h4>
                         <h5><i class="fas fa-pencil-alt mr-2"></i>7</h5>
-                        <a class="btn btn-outline-blue" href="post.php">View</a>
+                        <a class="btn btn-outline-blue border-0" href="posts.php">View</a>
                      </div>
                   </div>
-                  <div class="card border-pink text-center mb-4 mx-1 col-lg-12 col-md">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
                      <div class="card-body">
                         <h4>Categories</h4>
                         <h5><i class="far fa-folder-open mr-2"></i>4</h5>
-                        <a class="btn btn-outline-pink" href="category.php">View</a>
+                        <a class="btn btn-outline-pink border-0" href="categories.php">View</a>
                      </div>
                   </div>
-                  <div class="card border-yellow text-center mb-4 mx-1 col-lg-12 col-md">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
                      <div class="card-body">
                         <h4>Users</h4>
                         <h5><i class="fas fa-users mr-2"></i>4</h5>
-                        <a class="btn btn-outline-yellow" href="user.php">View</a>
+                        <a class="btn btn-outline-yellow border-0" href="users.php">View</a>
                      </div>
                   </div>
                </div>
