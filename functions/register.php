@@ -10,7 +10,7 @@ function registerUser($firstName, $lastName, $address, $contact, $username, $pas
          $last_id = $conn->insert_id;
          $sql = "INSERT INTO users (first_name, last_name, contact_number, `address`, account_id) VALUES ('$firstName', '$lastName', '$contact', '$address', $last_id)";
          if ($conn->query($sql)) {
-            header("location: login.php");
+            header("location: ../blog_portfolio");
             exit;
          } else {
             die("Error adding new user: " . $conn->error);

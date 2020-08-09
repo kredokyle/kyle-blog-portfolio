@@ -92,7 +92,7 @@ if (isset($_POST['btnRegister'])) {
                      <div class="mt-5">
                         <button name="btnRegister" class="btn btn-dark btn-block">JOIN NOW</button>
                         <div class="text-center mt-3">
-                           <small>Registered already? <a href="login.php">Log In</a></small>
+                           <small>Registered already? <a href="../blog_portfolio">Log In</a></small>
                         </div>
                      </div>
                   </div>
@@ -100,9 +100,6 @@ if (isset($_POST['btnRegister'])) {
             </div>
          </form>
       </main>
-      <!-- <footer class="bg-blue text-white text-center w-100" style="height: 100px; margin-top: 150px;">
-         <small style="line-height: 100px;">Kyle Nurville &copy; 2020</small>
-      </footer> -->
       <script src="js/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
    </body>
