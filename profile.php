@@ -125,8 +125,7 @@ if (isset($_POST['btnUpdateInfo'])) {
          <div class="container text-container">
             <div class="row">
                <div class="col-sm my-1">
-                  <a class="btn btn-yellow col text-truncate" href="changePassword.php"><i class="fas fa-lock mr-2"></i>Change
-                     Password</a>
+                  <a class="btn btn-yellow col text-truncate" href="changePassword.php"><i class="fas fa-lock mr-2"></i>Change Password</a>
                </div>
                <div class="col-sm my-1">
                   <a class="btn btn-outline-danger col text-truncate" href="deleteAccount.php"><i class="fas fa-trash-alt mr-3"></i>Delete Account</a>
@@ -138,29 +137,30 @@ if (isset($_POST['btnUpdateInfo'])) {
    <main class="container mt-6">
       <div class="row">
          <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-            <div class="card mb-5 border-0">
-               <div class="card-header p-0">
-                  <!-- IMAGE -->
-                  <?php
-                  if ($row['avatar'] == NULL) {
-                  ?>
-                     <div style="background-image: url('img/user.png'); width: 100%; height: 300px; background-position: center; background-size: cover;"></div>
-                  <?php
-                  } else {
-                  ?>
-                     <div style="background-image: url('img/<?= $row['avatar'] ?>'); width: 100%; height: 350px; background-position: center; background-size: cover;"></div>
-                  <?php
-                  }
-                  ?>
-               </div>
+            <div class="card mb-6 border-0 px-4">
+               <!-- IMAGE -->
+               <?php
+               if ($row['avatar'] == NULL) {
+               ?>
+                  <img src="img/user.png" alt="No Profile Picture" class="card-img-top rounded">
+               <?php
+               } else {
+               ?>
+                  <img src="img/<?= $row['avatar'] ?>" alt="<?= $row['avatar'] ?>" class="card-img-top rounded">
+               <?php
+               }
+               ?>
                <div class="card-body">
+                  <p class="card-text small mb-5">
+                     <?= $row['bio'] ?>
+                  </p>
                   <form action="" method="post" enctype="multipart/form-data">
-                     <div class="row">
-                        <div class="custom-file col-md-7 mb-1 mr-1">
+                     <div class="row justify-content-between">
+                        <div class="custom-file small col-md-7 mb-1 mr-1">
                            <label for="choosePhoto" class="custom-file-label">Choose Photo</label>
                            <input type="file" name="image" id="choosePhoto" class="custom-file-input" required>
                         </div>
-                        <button type="submit" class="btn btn-outline-dark btn-sm text-truncate col mb-1" name="btnUpdatePhoto" title="Update Photo">Update Photo</button>
+                        <button type="submit" class="btn btn-outline-secondary btn-sm text-truncate col-md-4 mb-1" name="btnUpdatePhoto" title="Update Photo">Update</button>
                      </div>
                   </form>
                </div>

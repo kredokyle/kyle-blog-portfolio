@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
    <!-- BRAND -->
    <a href="dashboard.php" class="navbar-brand">
-      <h1 class="h4">Blogen</h1>
+      <h1 class="h4 mb-1">Blogen</h1>
    </a>
    <!-- BUTTON -->
    <button class="navbar-toggler" data-toggle="collapse" data-target="#adminMenu">

@@ -29,7 +29,7 @@ if (isset($_POST['btnAddCategory'])) {
 <body>
    <?php include "adminMenu.php" ?>
    <header class="jumbotron jumbotron-fluid bg-pink">
-      <h2 class="display-4 text-white ml-4"><i class="far fa-folder-open pr-3"></i>Categories</h2>
+      <h2 class="display-4 text-white ml-4 text-truncate"><i class="far fa-folder-open pr-3"></i>Categories</h2>
    </header>
    <main role="main">
       <div class="container mt-6">
@@ -52,12 +52,14 @@ if (isset($_POST['btnAddCategory'])) {
                   </div>
                </form>
             </div>
-            <div class="col-lg-7 col-md-12">
+            <div class="col-lg-7 col-md-10 mx-auto">
                <table class="table table-striped table-hover table-sm">
                   <thead class="thead-dark">
                      <tr>
-                        <th>Category ID</th>
+                        <th class="d-none d-sm-table-cell">Category ID</th>
                         <th>Category Name</th>
+                        <th></th>
+                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -67,8 +69,14 @@ if (isset($_POST['btnAddCategory'])) {
                         while ($row = $result->fetch_assoc()) {
                      ?>
                            <tr>
-                              <td><?= $row['id'] ?></td>
+                              <td class="text-center d-none d-sm-table-cell"><?= $row['id'] ?></td>
                               <td><?= $row['category_name'] ?></td>
+                              <td class="text-center px-0">
+                                 <a href="#" class="btn btn-outline-secondary btn-sm my-1">Update</a>
+                              </td>
+                              <td class="px-0">
+                                 <a href="#" class="btn btn-outline-danger btn-sm my-1">Delete</a>
+                              </td>
                            </tr>
                         <?php
                         }

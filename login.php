@@ -86,7 +86,7 @@ if (isset($_POST['btnLogin'])) {
          </div>
       </form>
    </main>
-   <footer class="bg-blue text-white text-center w-100 fixed-bottom">
+   <footer class="bg-blue text-white text-center w-100" style="margin-top: 250px;">
       <small style="line-height:100px;">Kyle Nurville &copy; 2020</small>
    </footer>
 </body>

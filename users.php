@@ -68,7 +68,7 @@ if (isset($_POST['btnAddUser'])) {
    <main>
       <div class="container mt-6">
          <div class="row">
-            <div class="col-xl-5 col-lg-10 mx-auto">
+            <div class="col-xl-4 col-lg-10 mx-auto">
                <form action="" method="post">
                   <div class="card mb-5 bg-light">
                      <div class="card-header">
@@ -132,17 +132,16 @@ if (isset($_POST['btnAddUser'])) {
                </form>
             </div>
             <!--left form-->
-            <div class="col-xl-7 col-lg-12">
-               <table class="table table-striped table-bordered table-sm">
+            <div class="col-xl-8 col-lg-12">
+               <table class="table table-striped table-hover">
                   <thead class="thead-dark">
                      <tr>
-                        <th>USER #</th>
-                        <th>NAME</th>
-                        <th>ADDRESS</th>
-                        <th>CONTACT</th>
+                        <th class="d-none d-sm-table-cell">USER #</th>
+                        <th class="d-none d-sm-table-cell">NAME</th>
+                        <th class="d-none d-sm-table-cell">ADDRESS</th>
+                        <th class="d-none d-sm-table-cell">CONTACT</th>
                         <th>USERNAME</th>
                         <th>ROLE</th>
-                        <th></th>
                         <th></th>
                      </tr>
                   </thead>
@@ -152,17 +151,28 @@ if (isset($_POST['btnAddUser'])) {
                      while ($row = $result->fetch_assoc()) {
                      ?>
                         <tr>
-                           <td><?= $row['id'] ?></td>
-                           <td><?= $row['first_name'] . " " . $row['last_name'] ?></td>
-                           <td><?= $row['address'] ?></td>
-                           <td><?= $row['contact'] ?></td>
+                           <td class="text-center d-none d-sm-block"><?= $row['id'] ?></td>
+                           <td class="d-none d-sm-table-cell"><?= $row['first_name'] . " " . $row['last_name'] ?></td>
+                           <td class="d-none d-sm-table-cell"><?= $row['address'] ?></td>
+                           <td class="d-none d-sm-table-cell"><?= $row['contact'] ?></td>
                            <td><?= $row['username'] ?></td>
-                           <td><?php
-                              if($row['role'] == "A") echo "Admin";
+                           <td>
+                              <?php
+                              if ($row['role'] == "A") echo "<span class='font-weight-bold'>Admin</span>";
                               else echo "User";
-                           ?></td>
-                           <td></td>
-                           <td></td>
+                              ?>
+                           </td>
+                           <?php
+                           if ($row['role'] == "U") {
+                           ?>
+                              <td>
+                                 <a href="#" class="btn btn-outline-danger btn-sm">Remove</a>
+                              </td>
+                           <?php } else { ?>
+                              <td>
+                                 <a href="#" class="btn btn-outline-secondary btn-sm disabled">Remove</a>
+                              </td>
+                           <?php } ?>
                         </tr>
                      <?php
                      }

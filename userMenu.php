@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
    <!-- BRAND -->
    <a href="dashboard.php" class="navbar-brand">
-      <h1 class="h4">Blogen</h1>
+      <h1 class="h4 mb-1">Blogen</h1>
    </a>
    <!-- BUTTON -->
    <button class="navbar-toggler" data-toggle="collapse" data-target="#adminMenu">
@@ -22,7 +22,7 @@
       <ul class="navbar-nav">
          <li class="nav-item mr-2">
             <a href="profile.php" class="nav-link">
-               User: <?= $_SESSION['username'] ?>
+               User <?= $_SESSION['username'] ?>
             </a>
          </li>
          <li class="nav-item">

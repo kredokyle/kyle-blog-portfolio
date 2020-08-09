@@ -5,7 +5,7 @@ if (!$_SESSION['account_id']) {
    exit;
 }
 
-if(!$_GET['postID']){
+if (!$_GET['postID']) {
    header("location: posts.php");
    exit;
 }
@@ -50,14 +50,28 @@ $row = getPost($postID);
          <?php
          if ($row['account_id'] == $_SESSION['account_id']) {
          ?>
-            <a href="editPost.php?postID=<?= $postID ?>" class="btn btn-outline-yellow btn-sm px-5 border-0 text-secondary"><i class="fas fa-edit mr-2"></i>Edit Post</a>
+            <a href="editPost.php?postID=<?= $postID ?>" class="btn btn-outline-yellow btn-sm border-0 text-secondary"><i class="fas fa-edit mr-2"></i>Edit Post</a>
          <?php
          }
          ?>
       </div>
       <h3 class="display-3"><?= $row['post_title'] ?></h3>
-      <p class="small">
-         by <span class="font-italic font-weight-bold"><?= $row['author'] ?></span> &emsp;<i class="fas fa-grip-lines-vertical"></i>&emsp; <?= date_format(date_create($row['date_posted']), "F j, Y") ?> &emsp;<i class="fas fa-grip-lines-vertical"></i>&emsp; <?= $row['category'] ?>
+      <p class="small row">
+         <span class="col-sm">
+            by <span class="font-italic font-weight-bold"><?= $row['author'] ?></span>
+         </span>
+         <span class="col-sm d-none d-sm-block">
+            <i class="fas fa-grip-lines-vertical"></i>
+         </span>
+         <span class="col-sm">
+            <?= date_format(date_create($row['date_posted']), "F j, Y") ?>
+         </span>
+         <span class="col-sm d-none d-sm-block">
+            <i class="fas fa-grip-lines-vertical"></i>
+         </span>
+         <span class="col-sm text-blue">
+            <?= $row['category'] ?>
+         </span>
       </p>
       <p class="lead mt-5">
          <?= $row['post_message'] ?>

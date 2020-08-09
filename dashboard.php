@@ -9,11 +9,6 @@ include "functions/connection.php";
 
 function getAllPosts()
 {
-   // title
-   // author - username
-   // date_posted
-   // category
-   // Details
    $sql = "SELECT posts.id AS id, posts.post_title AS title, accounts.username AS author, posts.date_posted AS date_posted, categories.category_name AS category
          FROM accounts
          INNER JOIN posts
@@ -26,6 +21,33 @@ function getAllPosts()
    } else {
       die("Error retrieving posts: " . $conn->error);
    }
+}
+
+function countMyPost($id)
+{
+   $sql = "SELECT COUNT(*) AS `count` FROM posts WHERE account_id = $id";
+   $conn = connection();
+   $result = $conn->query($sql);
+   $row = $result->fetch_assoc();
+   return $row['count'];
+}
+
+function countCategories()
+{
+   $sql = "SELECT COUNT(*) AS `count` FROM categories";
+   $conn = connection();
+   $result = $conn->query($sql);
+   $row = $result->fetch_assoc();
+   return $row['count'];
+}
+
+function countUsers()
+{
+   $sql = "SELECT COUNT(*) AS `count` FROM users";
+   $conn = connection();
+   $result = $conn->query($sql);
+   $row = $result->fetch_assoc();
+   return $row['count'];
 }
 ?>
 <!DOCTYPE html>
@@ -45,7 +67,7 @@ function getAllPosts()
 
    <header>
       <div class="jumbotron jumbotron-fluid bg-blue m-0">
-         <h2 class="display-4 text-white ml-4"><i class="fas fa-cog mr-3"></i>Dashboard</h2>
+         <h2 class="display-4 text-white ml-4 text-truncate"><i class="fas fa-cog mr-3"></i>Dashboard</h2>
       </div>
       <div class="jumbotron jumbotron-fluid">
          <div class="container">
@@ -77,8 +99,8 @@ function getAllPosts()
                      <tr>
                         <th>Title</th>
                         <th>Author</th>
-                        <th>Date Posted</th>
-                        <th>Category</th>
+                        <th class="d-none d-sm-table-cell">Date Posted</th>
+                        <th class="d-none d-sm-table-cell">Category</th>
                         <th></th>
                      </tr>
                   </thead>
@@ -91,9 +113,9 @@ function getAllPosts()
                            <tr>
                               <td><?= $row['title'] ?></td>
                               <td><?= $row['author'] ?></td>
-                              <td><?= date_format(date_create($row['date_posted']), "F j, Y") ?></td>
-                              <td><?= $row['category'] ?></td>
-                              <td>
+                              <td class="d-none d-sm-table-cell"><?= date_format(date_create($row['date_posted']), "F j, Y") ?></td>
+                              <td class="d-none d-sm-table-cell"><?= $row['category'] ?></td>
+                              <td class="text-truncate">
                                  <a href="viewPost.php?postID=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>View</a>
                               </td>
                            </tr>
@@ -106,27 +128,36 @@ function getAllPosts()
                   </tbody>
                </table>
             </div>
-            <aside class="col-lg-4 mx-auto">
+            <aside class="col-lg-4 px-5 mx-auto">
                <div class="row">
-                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-secondary">
                      <div class="card-body">
                         <h4>My Posts</h4>
-                        <h5><i class="fas fa-pencil-alt mr-2"></i>7</h5>
-                        <a class="btn btn-outline-blue border-0" href="posts.php">View</a>
+                        <h5>
+                           <i class="fas fa-pencil-alt mr-2"></i>
+                           <?= countMyPost($_SESSION['account_id']); ?>
+                        </h5>
+                        <a class="btn btn-outline-blue border-0 mt-2" href="posts.php">View</a>
                      </div>
                   </div>
-                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-secondary">
                      <div class="card-body">
                         <h4>Categories</h4>
-                        <h5><i class="far fa-folder-open mr-2"></i>4</h5>
-                        <a class="btn btn-outline-pink border-0" href="categories.php">View</a>
+                        <h5>
+                           <i class="far fa-folder-open mr-2"></i>
+                           <?= countCategories(); ?>
+                        </h5>
+                        <a class="btn btn-outline-pink border-0 mt-2" href="categories.php">View</a>
                      </div>
                   </div>
-                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-dark">
+                  <div class="card text-center mb-4 mx-1 col-lg-12 col-md border-secondary">
                      <div class="card-body">
                         <h4>Users</h4>
-                        <h5><i class="fas fa-users mr-2"></i>4</h5>
-                        <a class="btn btn-outline-yellow border-0" href="users.php">View</a>
+                        <h5>
+                           <i class="fas fa-users mr-2"></i>
+                           <?= countUsers(); ?>
+                        </h5>
+                        <a class="btn btn-outline-yellow border-0 mt-2" href="users.php">View</a>
                      </div>
                   </div>
                </div>

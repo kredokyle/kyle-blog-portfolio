@@ -5,7 +5,7 @@ if (!$_SESSION['account_id']) {
    exit;
 }
 
-if(!$_GET['postID']){
+if (!$_GET['postID']) {
    header("location: posts.php");
    exit;
 }
@@ -32,7 +32,7 @@ function updatePost($postID, $title, $datePosted, $categoryID, $message)
    }
 }
 
-if(isset($_POST['btnSave'])){
+if (isset($_POST['btnSave'])) {
    $title = $_POST['title'];
    $datePosted = $_POST['datePosted'];
    $categoryID = $_POST['category'];
@@ -67,7 +67,7 @@ if(isset($_POST['btnSave'])){
    <main class="container mt-6">
       <a href="viewPost.php?postID=<?= $postID ?>" class="btn btn-outline-secondary btn-sm mb-3 border-0"><i class="fas fa-chevron-left mr-2"></i>Back</a>
       <div class="card border-0">
-         <div class="card-header border-0 bg-yellow">
+         <div class="card-header border-0 rounded bg-yellow">
             <h3>Edit Post</h3>
          </div>
          <div class="card-body">
@@ -77,13 +77,13 @@ if(isset($_POST['btnSave'])){
                   <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" value="<?= htmlspecialchars($rowPost['post_title']) ?>" required autofocus>
                </div>
                <div class="row px-0">
-                  <div class="input-group mb-2 col">
+                  <div class="input-group mb-2 col-md-6">
                      <div class="input-group-prepend">
                         <div class="input-group-text bg-lyellow"><i class="fas fa-calendar-day"></i></div>
                      </div>
                      <input type="date" name="datePosted" class="form-control" value="<?= $rowPost['date_posted'] ?>" required>
                   </div>
-                  <div class="input-group mb-2 col">
+                  <div class="input-group mb-2 col-md-6">
                      <div class="input-group-prepend">
                         <div class="input-group-text bg-lyellow"><i class="fas fa-sitemap"></i></div>
                      </div>
@@ -93,12 +93,11 @@ if(isset($_POST['btnSave'])){
                         $result = getCategories();
                         if ($result->num_rows > 0) {
                            while ($rowCat = $result->fetch_assoc()) {
-                              if($rowCat['category_name']==$rowPost['category']){
+                              if ($rowCat['category_name'] == $rowPost['category']) {
                                  echo "<option selected value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
-                              }else{
+                              } else {
                                  echo "<option value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
                               }
-
                            }
                         } else {
                            echo "<option disabled>No category found.</option>";

@@ -19,6 +19,8 @@ $spacers:(6: 6rem);
   min-width: 56px;
 }
 
+$headings-margin-bottom: 0;
+
 $btn-border-radius: 8rem;
 $btn-border-radius-sm: 8rem;
 $btn-border-radius-lg: 8rem;
@@ -32,7 +34,6 @@ $btn-font-weight: 700;
 $input-border-radius: 8rem;
 $input-border-radius-sm: 8rem;
 $input-border-radius-lg: 8rem;
-
 
 @import "node_modules/bootstrap/scss/functions";
 @import "node_modules/bootstrap/scss/variables";

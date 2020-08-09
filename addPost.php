@@ -59,7 +59,7 @@ if (isset($_POST['btnPost'])) {
    <main class="container mt-6">
       <a href="posts.php" class="btn btn-outline-secondary btn-sm mb-3 border-0"><i class="fas fa-chevron-left mr-2"></i>Back to Posts</a>
       <div class="card border-0">
-         <div class="card-header border-0 bg-lpink">
+         <div class="card-header border-0 rounded bg-lpink">
             <h3>New Post</h3>
          </div>
          <div class="card-body">
@@ -69,13 +69,13 @@ if (isset($_POST['btnPost'])) {
                   <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" required autofocus>
                </div>
                <div class="row px-0">
-                  <div class="input-group mb-2 col">
+                  <div class="input-group mb-2 col-md-6">
                      <div class="input-group-prepend">
                         <div class="input-group-text bg-lpink"><i class="fas fa-calendar-day"></i></div>
                      </div>
                      <input type="date" name="datePosted" class="form-control" required>
                   </div>
-                  <div class="input-group mb-2 col">
+                  <div class="input-group mb-2 col-md-6">
                      <div class="input-group-prepend">
                         <div class="input-group-text bg-lpink"><i class="fas fa-sitemap"></i></div>
                      </div>
