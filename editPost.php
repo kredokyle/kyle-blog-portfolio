@@ -17,13 +17,13 @@ include "functions/categories.php";
 $postID = $_GET['postID'];
 $rowPost = getPost($postID);
 
-function updatePost($postID, $title, $datePosted, $categoryID, $message)
+function updatePost($postID, $title, $datePosted, $categoryID, $content)
 {
    $conn = connection();
    $title = $conn->real_escape_string($title);
-   $message = $conn->real_escape_string($message);
+   $content = $conn->real_escape_string($content);
 
-   $sql = "UPDATE posts SET post_title = '$title', post_message = '$message', date_posted = '$datePosted', category_id = $categoryID WHERE id = $postID";
+   $sql = "UPDATE posts SET title = '$title', content = '$content', date_posted = '$datePosted', category_id = $categoryID WHERE id = $postID";
 
    if ($conn->query($sql)) {
       header("location: posts.php");
@@ -36,8 +36,8 @@ if (isset($_POST['btnSave'])) {
    $title = $_POST['title'];
    $datePosted = $_POST['datePosted'];
    $categoryID = $_POST['category'];
-   $message = $_POST['message'];
-   updatePost($postID, $title, $datePosted, $categoryID, $message);
+   $content = $_POST['content'];
+   updatePost($postID, $title, $datePosted, $categoryID, $content);
 }
 ?>
 <!DOCTYPE html>
@@ -74,7 +74,7 @@ if (isset($_POST['btnSave'])) {
             <form action="" method="POST">
                <div class="row align-items-center my-2 px-3">
                   <label for="title" class="h5 text-center col-sm-2">Title</label>
-                  <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" value="<?= htmlspecialchars($rowPost['post_title']) ?>" required autofocus>
+                  <input type="text" name="title" id="title" class="form-control form-control-lg col-sm-10" value="<?= htmlspecialchars($rowPost['title']) ?>" required autofocus>
                </div>
                <div class="row px-0">
                   <div class="input-group mb-2 col-md-6">
@@ -93,10 +93,10 @@ if (isset($_POST['btnSave'])) {
                         $result = getCategories();
                         if ($result->num_rows > 0) {
                            while ($rowCat = $result->fetch_assoc()) {
-                              if ($rowCat['category_name'] == $rowPost['category']) {
-                                 echo "<option selected value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
+                              if ($rowCat['name'] == $rowPost['category']) {
+                                 echo "<option selected value='" . $rowCat['id'] . "'>" . $rowCat['name'] . "</option>";
                               } else {
-                                 echo "<option value='" . $rowCat['id'] . "'>" . $rowCat['category_name'] . "</option>";
+                                 echo "<option value='" . $rowCat['id'] . "'>" . $rowCat['name'] . "</option>";
                               }
                            }
                         } else {
@@ -107,7 +107,7 @@ if (isset($_POST['btnSave'])) {
                   </div>
 
                </div>
-               <textarea name="message" cols="30" rows="10" class="form-control" style="border-radius: 5px;"><?= $rowPost['post_message'] ?></textarea>
+               <textarea name="content" cols="30" rows="10" class="form-control" style="border-radius: 5px;"><?= $rowPost['content'] ?></textarea>
 
                <button type="submit" name="btnSave" class="btn btn-yellow px-6 mt-5 d-block mx-auto">Save</button>
             </form>

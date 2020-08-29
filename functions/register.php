@@ -28,7 +28,7 @@ function registerUser($firstName, $lastName, $address, $contact, $username, $pas
 function registerAdmin($firstName, $lastName, $address, $contact, $role, $username, $passw){
    if (!userExists($username)) {
       $passw = password_hash($passw, PASSWORD_DEFAULT);
-      $sql = "INSERT INTO accounts (username, `password`, `status`) VALUES ('$username', '$passw', '$role')";
+      $sql = "INSERT INTO accounts (username, `password`, `role`) VALUES ('$username', '$passw', '$role')";
       $conn = connection();
       if ($conn->query($sql)) {
          $last_id = $conn->insert_id;

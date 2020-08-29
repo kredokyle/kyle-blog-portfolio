@@ -13,11 +13,11 @@ function login($username, $passw)
          session_start();
          $_SESSION['account_id'] = $row['id'];
          $_SESSION['username'] = $row['username'];
-         $_SESSION['role'] = $row['status'];
+         $_SESSION['role'] = $row['role'];
 
-         if ($row['status'] == "A") {
+         if ($row['role'] == "A") {
             header("location: dashboard.php");
-         } elseif ($row['status'] == "U") {
+         } elseif ($row['role'] == "U") {
             header("location: profile.php");
          }
          exit;

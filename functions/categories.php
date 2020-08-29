@@ -12,7 +12,7 @@ function getCategories()
 
 function createCategory($category)
 {
-   $sql = "INSERT INTO categories (category_name) VALUES ('$category')";
+   $sql = "INSERT INTO categories (`name`) VALUES ('$category')";
    $conn = connection();
    if ($conn->query($sql)) {
       header("refresh: 0");

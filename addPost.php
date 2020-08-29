@@ -8,14 +8,14 @@ if (!$_SESSION['account_id']) {
 include "functions/connection.php";
 include "functions/categories.php";
 
-function createPost($title, $datePosted, $categoryID, $message)
+function createPost($title, $datePosted, $categoryID, $content)
 {
    $conn = connection();
    $title = $conn->real_escape_string($title);
-   $message = $conn->real_escape_string($message);
+   $content = $conn->real_escape_string($content);
    $accountID = $_SESSION['account_id'];
 
-   $sql = "INSERT INTO posts (post_title, post_message, date_posted, account_id, category_id) VALUES ('$title', '$message', '$datePosted', $accountID, $categoryID)";
+   $sql = "INSERT INTO posts (title, content, date_posted, account_id, category_id) VALUES ('$title', '$content', '$datePosted', $accountID, $categoryID)";
 
    if ($conn->query($sql)) {
       header("location: posts.php");
@@ -28,8 +28,8 @@ if (isset($_POST['btnPost'])) {
    $title = $_POST['title'];
    $datePosted = $_POST['datePosted'];
    $categoryID = $_POST['category'];
-   $message = $_POST['message'];
-   createPost($title, $datePosted, $categoryID, $message);
+   $content = $_POST['content'];
+   createPost($title, $datePosted, $categoryID, $content);
 }
 ?>
 <!DOCTYPE html>
@@ -85,7 +85,7 @@ if (isset($_POST['btnPost'])) {
                         $result = getCategories();
                         if ($result->num_rows > 0) {
                            while ($row = $result->fetch_assoc()) {
-                              echo "<option value='" . $row['id'] . "'>" . $row['category_name'] . "</option>";
+                              echo "<option value='" . $row['id'] . "'>" . $row['name'] . "</option>";
                            }
                         } else {
                            echo "<option disabled>No category found.</option>";
@@ -95,7 +95,7 @@ if (isset($_POST['btnPost'])) {
                   </div>
 
                </div>
-               <textarea name="message" cols="30" rows="10" class="form-control" style="border-radius: 5px;"></textarea>
+               <textarea name="content" cols="30" rows="10" class="form-control" style="border-radius: 5px;"></textarea>
 
                <button type="submit" name="btnPost" class="btn btn-pink px-6 mt-5 d-block mx-auto">Post</button>
             </form>

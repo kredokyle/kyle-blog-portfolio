@@ -29,7 +29,7 @@ function deleteAccount($id){
    $conn = connection();
 
    if($conn->query($sql)){
-      header("location: login.php");
+      header("location: ../blog_portfolio");
       exit;
    }else{
       die("Error deleting your account: " . $conn->error);

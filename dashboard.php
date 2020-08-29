@@ -9,7 +9,7 @@ include "functions/connection.php";
 
 function getAllPosts()
 {
-   $sql = "SELECT posts.id AS id, posts.post_title AS title, accounts.username AS author, posts.date_posted AS date_posted, categories.category_name AS category
+   $sql = "SELECT posts.id AS id, posts.title AS title, accounts.username AS author, posts.date_posted AS date_posted, categories.name AS category
          FROM accounts
          INNER JOIN posts
          ON accounts.id = posts.account_id

@@ -73,7 +73,7 @@ if (isset($_POST['btnRegister'])) {
                         <div class="input-group-prepend">
                            <div class="input-group-text bg-lyellow"><i class="fas fa-id-card"></i></div>
                         </div>
-                        <input type="text" name="username" class="form-control" placeholder="Username" required>
+                        <input type="text" name="username" class="form-control" placeholder="Username" maxlength="15" required>
                      </div>
                      <div class="input-group mb-2">
                         <div class="input-group-prepend">

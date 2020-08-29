@@ -10,7 +10,7 @@ include "functions/connection.php";
 function getPosts()
 {
    $id = $_SESSION['account_id'];
-   $sql = "SELECT posts.id AS id, posts.post_title AS post_title, categories.category_name AS category, DATE_FORMAT(posts.date_posted, '%b %e, %Y') AS date_posted
+   $sql = "SELECT posts.id AS id, posts.title AS title, categories.name AS category, DATE_FORMAT(posts.date_posted, '%b %e, %Y') AS date_posted
          FROM posts
          INNER JOIN categories
          ON posts.category_id = categories.id
@@ -71,7 +71,7 @@ function getPosts()
                while ($row = $result->fetch_assoc()) {
             ?>
                   <tr>
-                     <td><?= $row['post_title'] ?></td>
+                     <td><?= $row['title'] ?></td>
                      <td><?= $row['date_posted'] ?></td>
                      <td class="d-none d-sm-table-cell"><?= $row['category'] ?></td>
                      <td class="text-truncate">

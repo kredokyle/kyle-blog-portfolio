@@ -11,7 +11,7 @@ include "functions/connection.php";
 
 function getUsers()
 {
-   $sql = "SELECT users.id AS id, users.first_name AS first_name, users.last_name AS last_name, users.address AS `address`, users.contact_number AS contact, accounts.username AS username, accounts.status AS `role`
+   $sql = "SELECT users.id AS id, users.first_name AS first_name, users.last_name AS last_name, users.address AS `address`, users.contact_number AS contact, accounts.username AS username, accounts.role AS `role`
    FROM users
    INNER JOIN accounts
    ON accounts.id = users.account_id";
@@ -108,7 +108,7 @@ if (isset($_POST['btnAddUser'])) {
                            <div class="input-group-prepend">
                               <div class="input-group-text bg-lyellow"><i class="fas fa-id-card"></i></div>
                            </div>
-                           <input type="text" name="username" class="form-control" placeholder="Username" required>
+                           <input type="text" name="username" class="form-control" placeholder="Username" maxlength="15" required>
                         </div>
                         <div class="input-group mb-2">
                            <div class="input-group-prepend">

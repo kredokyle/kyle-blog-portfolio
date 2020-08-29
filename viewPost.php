@@ -55,7 +55,7 @@ $row = getPost($postID);
          }
          ?>
       </div>
-      <h3 class="display-3"><?= $row['post_title'] ?></h3>
+      <h3 class="display-3"><?= $row['title'] ?></h3>
       <p class="small row">
          <span class="col-sm">
             by <span class="font-italic font-weight-bold"><?= $row['author'] ?></span>
@@ -74,7 +74,7 @@ $row = getPost($postID);
          </span>
       </p>
       <p class="lead mt-5">
-         <?= $row['post_message'] ?>
+         <?= $row['content'] ?>
       </p>
    </main>
    <footer class="bg-lblue text-center w-100" style="margin-top: 400px;">

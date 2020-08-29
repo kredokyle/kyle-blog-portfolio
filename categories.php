@@ -70,7 +70,7 @@ if (isset($_POST['btnAddCategory'])) {
                      ?>
                            <tr>
                               <td class="text-center d-none d-sm-table-cell"><?= $row['id'] ?></td>
-                              <td><?= $row['category_name'] ?></td>
+                              <td><?= $row['name'] ?></td>
                               <td class="text-center px-0">
                                  <a href="#" class="btn btn-outline-secondary btn-sm my-1">Update</a>
                               </td>
