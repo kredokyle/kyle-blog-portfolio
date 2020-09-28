@@ -70,7 +70,7 @@ if (isset($_POST['btnLogin'])) {
                <?= $error; ?>
                <div class="mb-2">
                   <label for="username" class="small text-light">Username</label>
-                  <input type="text" name="username" id="username" class="form-control" required>
+                  <input type="text" name="username" id="username" class="form-control" required autofocus>
                </div>
                <div>
                   <label for="password" class="small text-light">Password</label>
