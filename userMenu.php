@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
    <!-- BRAND -->
-   <a href="dashboard.php" class="navbar-brand">
+   <a href="#" class="navbar-brand">
       <h1 class="h4 mb-1">Blogen</h1>
    </a>
    <!-- BUTTON -->

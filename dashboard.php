@@ -119,10 +119,16 @@ function countUsers()
                                  <a href="viewPost.php?postID=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>View</a>
                               </td>
                            </tr>
-                     <?php
+                        <?php
                         }
                      } else {
-                        //no post 
+                        ?>
+                        <tr>
+                           <td colspan="5" class="text-center">
+                              <p class="lead font-italic font-weight-bold mb-0">No post found.</p>
+                           </td>
+                        </tr>
+                     <?php
                      }
                      ?>
                   </tbody>
