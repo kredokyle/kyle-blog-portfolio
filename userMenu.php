@@ -1,8 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
    <!-- BRAND -->
-   <a href="#" class="navbar-brand">
-      <h1 class="h4 mb-1">Blogen</h1>
-   </a>
+   <h1 class="navbar-brand h3 mb-2">Blogen</h1>
+
    <!-- BUTTON -->
    <button class="navbar-toggler" data-toggle="collapse" data-target="#adminMenu">
       <span class="navbar-toggler-icon"></span>

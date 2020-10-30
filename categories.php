@@ -56,10 +56,8 @@ if (isset($_POST['btnAddCategory'])) {
                <table class="table table-striped table-hover table-sm">
                   <thead class="thead-dark">
                      <tr>
-                        <th class="d-none d-sm-table-cell">Category ID</th>
+                        <th class="text-center d-none d-sm-table-cell">Category ID</th>
                         <th>Category Name</th>
-                        <th></th>
-                        <th></th>
                      </tr>
                   </thead>
                   <tbody>
@@ -71,12 +69,6 @@ if (isset($_POST['btnAddCategory'])) {
                            <tr>
                               <td class="text-center d-none d-sm-table-cell"><?= $row['id'] ?></td>
                               <td><?= $row['name'] ?></td>
-                              <td class="text-center px-0">
-                                 <a href="#" class="btn btn-outline-secondary btn-sm my-1">Update</a>
-                              </td>
-                              <td class="px-0">
-                                 <a href="#" class="btn btn-outline-danger btn-sm my-1">Delete</a>
-                              </td>
                            </tr>
                         <?php
                         }

@@ -74,7 +74,7 @@ $row = getPost($postID);
          </span>
       </p>
       <p class="lead mt-5">
-         <?= $row['content'] ?>
+         <?= nl2br($row['content']) ?>
       </p>
    </main>
    <footer class="bg-lblue text-center w-100" style="margin-top: 400px;">

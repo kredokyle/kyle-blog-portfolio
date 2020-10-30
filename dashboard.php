@@ -113,7 +113,7 @@ function countUsers()
                            <tr>
                               <td><?= $row['title'] ?></td>
                               <td><?= $row['author'] ?></td>
-                              <td class="d-none d-sm-table-cell"><?= date_format(date_create($row['date_posted']), "F j, Y") ?></td>
+                              <td class="d-none d-sm-table-cell" style="width: 120px;"><?= date_format(date_create($row['date_posted']), "M j, Y") ?></td>
                               <td class="d-none d-sm-table-cell"><?= $row['category'] ?></td>
                               <td class="text-truncate">
                                  <a href="viewPost.php?postID=<?= $row['id'] ?>" class="btn btn-outline-dark btn-sm"><i class="fas fa-angle-double-right mr-1"></i>View</a>

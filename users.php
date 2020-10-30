@@ -11,7 +11,7 @@ include "functions/connection.php";
 
 function getUsers()
 {
-   $sql = "SELECT users.id AS id, users.first_name AS first_name, users.last_name AS last_name, users.address AS `address`, users.contact_number AS contact, accounts.username AS username, accounts.role AS `role`
+   $sql = "SELECT accounts.id AS id, users.first_name AS first_name, users.last_name AS last_name, users.address AS `address`, users.contact_number AS contact, accounts.username AS username, accounts.role AS `role`
    FROM users
    INNER JOIN accounts
    ON accounts.id = users.account_id";
@@ -166,7 +166,7 @@ if (isset($_POST['btnAddUser'])) {
                            if ($row['role'] == "U") {
                            ?>
                               <td>
-                                 <a href="#" class="btn btn-outline-danger btn-sm">Remove</a>
+                                 <a href="deleteAccountAsAdmin.php?id=<?= $row['id'] ?>" class="btn btn-outline-danger btn-sm">Remove</a>
                               </td>
                            <?php } else { ?>
                               <td>
